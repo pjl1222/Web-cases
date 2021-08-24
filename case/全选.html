@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全选</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    .box{
+        width: 150px;
+        padding: 5px;
+        border: 1px solid seagreen;
+        margin: 100px auto;
+    }
+    .box div{
+        padding: 10px;
+    }
+</style>
+<body>
+    <div class="box">
+        <div class="all">
+            全选：<input type="checkbox">
+        </div>
+        <hr>
+        <div class="items">
+            七里香：<input type="checkbox"><br>
+            园游会：<input type="checkbox"><br>
+            一点点：<input type="checkbox"><br>
+            大笨钟：<input type="checkbox">
+        </div>
+    </div>
+</body>
+<script>
+    /*
+        1.点击全选按钮，每一个选项都被选中或者未选中
+        2.如果所有单选按钮选中，则全选选中，否则全选不选中
+    */
+    var allBtn = document.querySelector('.all > input')
+    var itemBtns = document.querySelectorAll('.items > input')
+    allBtn.onclick = function (){
+        var type = allBtn.checked
+        for(var i = 0; i < itemBtns.length; i++){
+            itemBtns[i].checked = type
+        }
+    }
+    itemBtns.forEach(function (item){
+        item.onclick = function() {
+            var flag = true
+            itemBtns.forEach(function (item){
+                if(!item.checked) flag = false
+            })
+            allBtn.checked = flag
+        }
+    })
+</script>
+</html>

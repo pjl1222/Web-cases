@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>分页器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .pagination {
+            width: 700px;
+            height: 60px;
+            border: 2px solid forestgreen;
+            margin: 30px auto;
+            padding-left: 100px;
+        }
+
+        .pagination span,
+        .pagination li {
+            float: left;
+            line-height: 60px;
+            padding: 0 12px;
+            cursor: pointer;
+        }
+
+        .pagination li.active {
+            color: orangered;
+        }
+
+        table {
+            width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            border: 2px solid palevioletred;
+        }
+
+        table>tbody>tr:nth-child(odd) {
+            background-color: pink;
+        }
+
+        table>tbody>tr:nth-child(even) {
+            background-color: skyblue;
+        }
+
+        table>tbody>tr:hover {
+            background-color: seagreen;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pagination">
+        <span class="first">首页</span>
+        <span class="prev">上一页</span>
+        <ul class="pageList">
+        </ul>
+        <span class="next">下一页</span>
+        <span class="last">尾页</span>
+    </div>
+    <table cellspacing='0'>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>班级</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+    
+        </tbody>
+    </table>
+    <script>
+        /*
+         1.准备数据 
+         2.一页显示多少条 
+         3.计算页数(根据页数渲染li) 
+         4.拿出第一页的数据渲染表格
+         5.点击切换按钮时，切换到对应的页
+        */
+        var pageList = document.querySelector('.pageList')
+        var prevBtn = document.querySelector('.prev')
+        var nextBtn = document.querySelector('.next')
+        var firstBtn = document.querySelector('.first')
+        var lastBtn = document.querySelector('.last')
+        var tbody = document.querySelector('tbody')
+        var currentPage = 1
+
+        var userList = []
+        var last_name = '赵钱孙李周吴郑王彭黄杨张夏黎段何'
+        var first_name = '一二三四五六七八九十翠紫芳'
+        var genders = '男女'
+        var classes = ['2001', '2002', '2003']
+        for (var i = 0; i < 123; i++) {
+            userList.push({
+                id: i + 1,
+                username: last_name[Math.floor(Math.random() * (last_name.length))] + first_name[Math.floor(Math.random() * (first_name.length))],
+                gender: genders[Math.floor(Math.random() * (genders.length))],
+                class: classes[Math.floor(Math.random() * (classes.length))]
+            })
+        }
+        var totlePage = Math.ceil(userList.length / 15)
+        var frag = document.createDocumentFragment()
+        for(var i = 1; i <= totlePage; i++){
+            var li = document.createElement('li')
+            li.innerHTML = i
+            li.dataset.page = i
+            if(i === 1) li.className = 'active'
+            li.onclick = function(){
+                var page = this.dataset.page - 0
+                currentPage = page
+                bindHtml()
+            }
+            frag.appendChild(li)
+        }
+        pageList.appendChild(frag)
+
+        // 渲染页面的函数
+        function bindHtml(){
+            var bindList = userList.slice((currentPage - 1) * 15, currentPage * 15)
+            var str = ''
+            bindList.forEach(function(item, index){
+                str += `
+                <tr>
+                    <th>${ index + 1 }</th>
+                    <th>${ item.id }</th>
+                    <th>${ item.username }</th>
+                    <th>${ item.gender }</th>
+                    <th>${ item.class }</th>
+                    <th>
+                        <button>编辑</button>
+                        <button>删除</button>
+                    </th>
+                </tr>
+            `
+            })
+            tbody.innerHTML = str
+            changeCurrent()
+        }
+        bindHtml()
+
+        // 改变active
+        function changeCurrent(){
+            for(var i = 0; i < pageList.children.length; i++){
+                pageList.children[i].className = ''
+            }
+            pageList.children[currentPage - 1].className = 'active'
+        }
+        // 下一页
+        prevBtn.onclick = function(){
+            if(currentPage === 1) return
+            currentPage--
+            bindHtml()
+        }
+        // 下一页
+        nextBtn.onclick = function(){
+            if(currentPage === totlePage) return
+            currentPage++
+            bindHtml()
+        }
+        // 首页
+        firstBtn.onclick = function(){
+            if(currentPage === 1) return
+            currentPage = 1
+            bindHtml()
+        }
+        // 尾页
+        lastBtn.onclick = function(){
+            if(currentPage === totlePage) return
+            currentPage = totlePage
+            bindHtml()
+        }
+        document.onselectstart = function(e){
+            e.preventDefault()
+        }
+    </script>
+</body>
+</html>

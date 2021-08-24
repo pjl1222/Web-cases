@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>position</title>
+</head>
+
+
+
+<style>
+* { margin: 0; padding: 0; }
+ul { list-style: none; }
+#menu{width: 100px; height: 30px; line-height: 30px; text-align: center; margin: 20px auto; border: 1px tomato solid; position: relative;}
+#menu ul{width: 100px; border: 1px tomato solid; position: absolute; left: -1px; top: 30px; 
+background-color: rgb(241, 236, 236); display: none;}
+#menu:hover ul{display: block;}
+#menu ul li:hover{background: orange; cursor: pointer;}
+</style>
+<body>
+    <div id="menu">
+        卖家中心
+        <ul>
+            <li>列表项1</li>
+            <li>列表项2</li>
+            <li>列表项3</li>
+            <li>列表项4</li>
+        </ul>
+    </div>
+    <p>我被覆盖了我被覆盖了我被覆盖了我被覆盖了我被覆盖了我被覆盖了
+        我被覆盖了我被覆盖了我被覆盖了我被覆盖了我被覆盖了我被覆盖了
+        我被覆盖了我被覆盖了我被覆盖了我被覆盖了我被覆盖了我被覆盖了
+        我被覆盖了我被覆盖了我被覆盖了我被覆盖了</p>
+</body>
+<script>
+    
+</script>
+</html>

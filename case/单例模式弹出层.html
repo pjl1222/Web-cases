@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>弹出层</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #box {
+            width: 500px;
+            height: 300px;
+            border: 1px solid #ccc;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            background-color: whitesmoke;
+            display: none;
+        }
+        #box > .top {
+            height: 20px;
+            /* background-color: skyblue; */
+            padding: 10px;
+        }
+        #box > .top > span {
+            float: right;
+            width: 20px;
+            height: 20px;
+            border-radius: 20%;
+            cursor: pointer;
+            background-color: white;
+            font-size: 16px;
+            text-align: center;
+            line-height: 20px;
+        }
+        #box > .content {
+            height: 210px;
+            background-color: pink;
+            position: relative;
+        }
+        #box > .content > p {
+            position: absolute;
+            padding: 20px;
+            width: calc(100% - 40px);
+            top: 25%;
+            text-align: center;
+            line-height: 30px;
+            font-size: 17px;
+        }
+        #box > .btns {
+            height: 50px;
+            background-color: skyblue;
+        }
+        #box > .btns > button {
+            float: right;
+            padding: 8px 25px;
+            margin-top: 6px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="change()">点击弹出</button>
+    <div id="box">
+
+    </div>
+    <script>
+        const Tip = (function(){
+            // 实现功能的类
+            class Tip {
+                constructor () {
+                    // 最外层div标签
+                    this.ele = document.createElement('div')
+                    this.ele.id = 'box'
+                    this.callback = function() {}
+                    document.body.appendChild(this.ele)
+                    this.bindEvent()
+                }
+                // 填充ele里面的内容
+                setContent(txt) {
+                    // 这段代码不应该直接添加字符串，而是以创建节点的形式书写，再自己添加样式
+                    // 这里我们只修改内容
+                    this.ele.innerHTML = `
+                    <div class="top">标题
+                        <span class="close">X</span>
+                    </div>
+                    <div class="content">
+                        <p>${ txt }</p>
+                    </div>
+                    <div class="btns">
+                        <button class="cancel">取消</button>
+                        <button class="sure">确定</button>
+                    </div>
+                    `
+                    this.ele.style.display = 'block'
+                }
+                // 添加各种事件
+                bindEvent() {
+                    this.ele.addEventListener('click', e => {
+                        e = e || window.event
+                        const target = e.target || e.srcElement
+                        if(target.className === 'close'){
+                            this.ele.style.display = 'none'
+                        }
+                        if(target.className === 'cancel'){
+                            this.ele.style.display = 'none'
+                            this.callback(false)
+                        }
+                        if(target.className === 'sure'){
+                            this.ele.style.display = 'none'
+                            this.callback(true)
+                        }
+                    })
+                }
+                changeColor(color) {
+                    this.ele.querySelector('.top').style.backgroundColor = color
+                }
+            }
+            // 单例模式核心代码
+            let instance = null
+            return function singleTon(options = {}) {
+                if(!instance) instance = new Tip()
+                instance.setContent(options.txt || "不知道写什么内容哦！")
+                instance.changeColor(options.color || 'skyblue')
+                instance.callback = options.cb || function() {}
+                return instance
+            }
+        })()
+        let obj = {
+            txt: '恨自己真的没用情绪激动，还在为分手前那句抱歉在感动。穿梭时间的画面的钟，从反向开始移动。',
+            color: 'orange',
+            cb: function(res) { console.log("这次的结果为：", res) }
+        }
+        // Tip(obj)
+        function change() {
+            Tip(obj)
+        }
+    </script>
+</body>
+</html>

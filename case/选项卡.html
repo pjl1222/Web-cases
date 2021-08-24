@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选项卡</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    ul{
+        list-style: none;
+    }
+    .box{
+        width: 600px;
+        height: 300px;
+        border: 1px solid #333;
+        margin: 30px auto;
+    }
+    .box ul{
+        width: 100%;
+        height: 60px;
+    }
+    .box > ul > li{
+        width: 200px;
+        height: 100%;
+        background-color: orange;
+        text-align: center;
+        line-height: 60px;
+        color: floralwhite;
+        cursor: pointer;
+        float: left;
+    }
+    .box > ul > li.active{
+        background-color: skyblue;
+    }
+    .box ol{
+        width: 100%;
+        height: 240px;
+        position: relative;
+    }
+    .box > ol > li{
+        width: 100%;
+        height: 100%;
+        background-color: rgb(223, 83, 181);
+        color: floralwhite;
+        font-size: 50px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        line-height: 240px;
+        text-align: center;
+        display: none;
+    }
+    .box > ol > li.active{
+        display: block;
+    }
+</style>
+<body>
+    <div class="box">
+        <ul>
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+        <ol>
+            <li class="active">我是1的内容</li>
+            <li>我是2的内容</li>
+            <li>我是3的内容</li>
+        </ol>
+    </div>
+</body>
+<script>
+    const btns = document.querySelectorAll('ul > li')
+    const tabs = document.querySelectorAll('ol > li')
+
+    // 用for循环实现选项卡,输出的结果都是3；见五、8
+    // 因为函数里面涉及到变量的时候，在定义的时候不解析变量，只按照变量名保存，只有执行的时候才会解析变量
+    // for(var i = 0; i < btns.length; i++){
+    //     btns[i].onclick = function() {
+    //         console.log(i)
+    //     }
+    // }
+
+    // 用for循环实现选项卡,添加自定义属性index,使用this关键字
+    // for(var i = 0; i < btns.length; i++){
+    //     btns[i].setAttribute('index', i)
+    //     btns[i].onclick = function() {
+    //         for (var j = 0; j < btns.length; j++){
+    //             btns[j].className = ''
+    //             tabs[j].className = '' // 选项卡的数量和点击按钮的数量一致
+    //         }
+    //         // this.className = 'active'
+    //         var index = this.getAttribute('index') - 0
+    //         btns[index].className = 'active'
+    //         tabs[index].className = 'active'
+    //     }
+    // }
+
+    // 用forEach实现选项卡,比for循环多了一层私有作用域
+    // btns.forEach(function(item, index){
+    //     item.onclick = function() {
+    //         tabs.forEach(function(t, i){
+    //             t.className = ''
+    //             btns[i].className = ''
+    //         })
+    //         item.className = 'active'
+    //         tabs[index].className = 'active'
+    //     }
+    // })
+
+    // 用let实现选项卡
+    // for(let i = 0; i < btns.length; i++){
+    //     btns[i].onclick = function() {
+    //         for (var j = 0; j < btns.length; j++){
+    //             btns[j].className = tabs[j].className = '' // 选项卡的数量和点击按钮的数量一致
+    //         }
+    //         btns[i].className = tabs[i].className = 'active'
+    //     }
+    // }
+
+    // 用事件委托实现选项卡
+    // const ul = document.querySelector('ul')
+    // ul.onclick = function(e) {
+    //     e = e || window.event
+    //     var target = e.target || e.srcElement
+    //     if(target.nodeName == "LI"){
+	// 		for(let i = 0; i < btns.length; i++){
+	// 			btns[i].className = tabs[i].className = ''
+	// 			btns[i].i = i
+	// 		}
+	// 		target.className = tabs[target.i].className = 'active'
+	// 	}
+    //     console.log(e)
+    // }
+
+    // 用闭包实现选项卡
+    // for(var i = 0; i < btns.length; i++){
+    //     btns[i].onclick = (function(index){
+    //         return function () {
+    //             for (var j = 0; j < btns.length; j++){
+    //                 btns[j].className = tabs[j].className = '' // 选项卡的数量和点击按钮的数量一致
+    //             }
+    //             btns[index].className = tabs[index].className = 'active'
+    //         }
+    //     })(i)
+    // }
+
+    // function loop(i){
+    //     btns[i].onclick = function (){
+    //         for (var j = 0; j < btns.length; j++){
+    //             btns[j].className = tabs[j].className = '' // 选项卡的数量和点击按钮的数量一致
+    //         }
+    //         btns[i].className = tabs[i].className = 'active'
+    //     }
+    // }
+    // for(var i = 0; i < btns.length; i++){
+    //     loop(i)
+    // }
+
+    // 面向对象
+    function Tabs(ele) {
+        this.ele = document.querySelector(ele)
+        this.btns = this.ele.querySelectorAll('ul > li')
+        this.tabs = this.ele.querySelectorAll('ol > li')
+        this.change()
+    }
+    Tabs.prototype.change = function() {
+        let _this = this
+        this.btns.forEach(function (item, index) {
+            item.addEventListener('click', function(){
+                _this.btns.forEach(function(t, i){
+                    t.className = ''
+                    _this.tabs[i].className = ''
+                })
+                item.className = 'active'
+                _this.tabs[index].className = 'active'
+            })
+        })
+    }
+
+    // Tabs.prototype.change = function() {
+    //     this.btns.forEach((item, index) => {
+    //         item.addEventListener('click', () => {
+    //             this.btns.forEach((t, i) => {
+    //                 t.className = ''
+    //                 this.tabs[i].className = ''
+    //             })
+    //             item.className = 'active'
+    //             this.tabs[index].className = 'active'
+    //         })
+    //     })
+    // }
+    new Tabs('.box')
+    
+</script>
+</html>

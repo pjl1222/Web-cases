@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拖拽</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div {
+            width: 600px;
+            height: 600px;
+            border: chocolate 5px dashed;
+            border-radius: 15px;
+            margin: 50px auto;
+            position: relative;
+        }
+        p {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div><p></p></div>
+    <script>
+        // 拖拽分为三个事件 mousedown：决定要移动
+        //                mousemove：移动过程，让盒子跟着跑
+        //                mouseup：决定不要移动
+
+        // 获取元素
+        var div = document.querySelector('div')
+        var p = document.querySelector('p')
+        // 绑定事件
+        var flag = false
+        p.addEventListener('mousedown', function() {
+            flag = true
+        })
+        document.addEventListener('mouseup', function() {
+            flag = false
+        })
+        div.addEventListener('mousemove', function(e) {
+            if(!flag) return
+            e = e || window.event
+            // 获取坐标点
+            var x = e.pageX - div.offsetLeft - div.clientLeft - p.offsetWidth / 2
+            var y = e.pageY - div.offsetTop - parseInt(getComputedStyle(div).borderTopWidth) - p.offsetWidth / 2
+            // 把坐标点的值赋值给left和top，这里写成20有吸附效果
+            if(x < 0) x = 0 
+            if(x > div.clientWidth - p.offsetWidth) x = div.clientWidth - p.offsetWidth
+            if(y < 0) y = 0
+            if(y > div.clientHeight - p.offsetHeight) y = div.clientHeight - p.offsetHeight
+            p.style.left = x + 'px'
+            p.style.top = y + 'px'
+        })
+    </script>
+</body>
+</html>

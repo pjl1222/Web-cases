@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        height: 3000px;
+    }
+    button{
+        position: fixed;
+        bottom: 50px;
+        right: 50px;
+    }
+</style>
+<body>
+    <button id="btn">定位滚动条位置</button>
+    <div id="div"></div>
+</body>
+<script>
+    /* 
+    问题1:滚动上去以后就停不下来了，因为定时器通过点击按钮启动，一直在运行
+        在定时器里面判断，如果卷去得高度<=0，就停止定时器
+    问题2:滚动的中途停不下来
+        往回滚动，数字会越来越小,一旦某一次数字变大，说明从反方向开始移动
+        在滚动事件window.onscroll中实现
+    */
+    var timeId = 0
+    btn.onclick = function() {
+        timeId = setInterval(function(){
+            document.documentElement.scrollTop -= 20
+            // 滚动到目标位置停止定时器
+            if(document.documentElement.scrollTop <= 0){
+                clearInterval(timeId)
+            }
+        }, 30)
+    }
+    var st = 0
+    window.onscroll = function () {
+        // 滚动过程中停止定时器
+        if(document.documentElement.scrollTop >= st){
+            clearInterval(timeId)
+        }
+        st = document.documentElement.scrollTop
+    }
+</script>
+</html>

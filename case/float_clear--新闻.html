@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>float_clear</title>
+</head>
+
+
+
+<style>
+* { margin: 0; padding: 0; }
+h1, h2, h3{font-size: 14px;}
+ul { list-style: none; }
+a { text-decoration: none; color: #666; }
+a:hover { text-decoration: underline; color: orange; }
+img { display: block;}
+.l{float:left}
+.r{float: right;}
+.clear:after{content: ""; display: block; clear: both;}
+#main{width: 366px; margin: 20px auto;}
+#main .title{height: 23px; line-height: 23px; font-size: 12px; padding-left: 30px;
+    background: url(./img/title_logo.png) no-repeat 5px 6px, url(./img/title.png) repeat-x}
+#main ul{margin-top: 13px;}
+#main li{margin-bottom: 22px;}
+#main .pic{width: 99px; border: 1px solid #ccc; margin-left: 5px;}
+#main .pic img {margin: 2px;}
+#main .content{width: 240px; font-size: 12px; line-height: 20px; margin-left: 13px;}
+#main .content h2{ line-height: 24px; font-size: 12px;}
+</style>
+<body>
+    <div id="main">
+        <h2 class="title">外媒评论精选</h2>
+        <ul>
+            <li class="clear">
+                <div class="l pic">
+                    <img src="./img/gou.jpg" alt="" width="95px">
+                </div>
+                <div class="l content">
+                    <h2>加勒比海盗——商业味浓郁</h2>
+                    <p>
+                        这是一段测试文字，我需要一大段，所以我只有再多写一点，再凑一点点吧...
+                        <a href="#">[详细]</a>
+                    </p>
+                </div>
+            </li>
+            <li class="clear">
+                <div class="l pic">
+                    <img src="./img/gou.jpg" alt="" width="95px">
+                </div>
+                <div class="l content">
+                    <h2>加勒比海盗——商业味浓郁</h2>
+                    <p>
+                        这是一段测试文字，我需要一大段，所以我只有再多写一点，再凑一点点吧...
+                        <a href="#">[详细]</a>
+                    </p>
+                </div>
+            </li>
+            <li class="clear">
+                <div class="l pic">
+                    <img src="./img/gou.jpg" alt="" width="95px">
+                </div>
+                <div class="l content">
+                    <h2>加勒比海盗——商业味浓郁</h2>
+                    <p>
+                        这是一段测试文字，我需要一大段，所以我只有再多写一点，再凑一点点吧...
+                        <a href="#">[详细]</a>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    
+</script>
+</html>
