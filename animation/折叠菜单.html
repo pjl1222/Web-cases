@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>折叠菜单</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #menu {
+            width: 250px;
+            height: 300px;
+            perspective: 500px;
+        }
+        #list {
+            width: 200px;
+            height: 50px;
+            background-color: skyblue;
+            margin: 50px auto;
+            transform: rotateY(30deg);
+            transform-style: preserve-3d;
+        }
+        #list div {
+            width: 100%;
+            height: 100%;
+            background-color:orange;
+            color: cornsilk;
+            text-align: center;
+            line-height: 50px;
+            transform-origin: top;
+            margin-top: 5px;
+            transform: rotateX(180deg);
+            transform-style: preserve-3d;
+        }
+        #list > div {
+            position: relative;
+            top: 54px;
+        }
+    </style>
+</head>
+<body>
+    <button id="btn1">展开</button>
+    <button id="btn2">收起</button>
+    <div id="menu">
+        <div id="list">
+            <div>
+                1
+                <div>
+                    2
+                    <div>
+                        3
+                        <div>
+                            4
+                            <div>
+                                5
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const btn1 = document.getElementById('btn1')
+        const btn2 = document.getElementById('btn2')
+        const list = document.getElementById('list')
+        const listItems = list.getElementsByTagName('div')
+        btn1.onclick = function() {
+            for(let i = 0; i < listItems.length; i++){
+                listItems[i].style.transition = `1s ${i * 150}ms`
+                listItems[i].style.transform = `rotateX(0)`
+            }
+        }
+        btn2.onclick = function() {
+            for(let i = listItems.length - 1; i >= 0 ; i--){
+                listItems[i].style.transition = `1s ${(listItems.length - i - 1) * 150}ms`
+                listItems[i].style.transform = `rotateX(180deg)`
+            }
+        }
+    </script>
+</body>
+</html>

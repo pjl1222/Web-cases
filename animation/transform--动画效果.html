@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画效果</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .photo{
+        width: 300px;
+        margin: 30px auto;
+        position: relative;
+        overflow: hidden;
+    }
+    .photo img{
+        width: 100%;
+        display: block;
+    }
+    .box{
+        border: white 1px dashed;
+        width: 220px;
+        height: 126px;
+        position: absolute;
+        left: 40px;
+        top: 30px;
+        transform: translate(0, -30px) rotate(-90deg);
+        transform-origin: 0 0;
+        transition: .2s;
+    }
+    .text{
+        font-size: 20px;
+        color: white;
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        bottom: 80px;
+        transform: translate(0, 110px);
+        transition: .5s;
+    }
+    .photo:hover .box{
+        transform: translate(0, 0) rotate(0);
+    }
+    .photo:hover .text{
+        transform: translate(0, 0);
+    }
+</style>
+<body>
+    <div class="photo">
+        <img src="./img/3.jpg" alt="">
+        <div class="box"></div>
+        <div class="text">小猫咪</div>
+    </div>
+</body>
+</html>

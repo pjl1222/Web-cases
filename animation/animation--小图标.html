@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    div{
+        margin: 50px auto;
+        width: 60px;
+        height: 60px;
+        position: relative;
+    }
+    img{
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -25px;
+        margin-top: -25px;
+    }
+    div:hover img{
+        animation: move 1s;
+        cursor: pointer;
+    }
+    @keyframes move{
+	0% { transform: translate(0, 0); opacity: 1; }
+	50% { transform: translate(0, -30px); opacity: 0; }
+    55% { transform: translate(0, 10px) }
+    100% { transform: translate(0, 0);opacity: 1; }
+}
+</style>
+<body>
+    <div>
+        <img src="./img/icon.jpg" alt="">
+    </div>
+    
+</body>
+</html>

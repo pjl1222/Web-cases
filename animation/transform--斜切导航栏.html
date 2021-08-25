@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>斜切导航栏</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    ul{
+        list-style: none;
+        width: 438px;
+        margin: 50px auto;
+        overflow: hidden;
+    }
+    ul li{
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        margin-right: 12px;
+        color: whitesmoke;
+        background-color: brown;
+        float: left;
+        cursor: pointer;
+        transform: skew(30deg);
+    }
+    ul li span{
+        display: block;
+        transform: skew(-30deg);
+    }
+    ul li:first-child{
+       padding-left: 10px; 
+       margin-left: -10px;
+    }
+    ul li:last-child{
+       padding-right: 10px; 
+       margin-right: -10px;
+    }
+</style>
+<body>
+    <ul>
+        <li><span>首页</span></li>
+        <li><span>招聘信息</span></li>
+        <li><span>关于我们</span></li>
+        <li><span>帮助</span></li>
+    </ul>
+</body>
+</html>

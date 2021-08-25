@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template • TodoMVC</title>
+		<link rel="stylesheet" href="./css/base.css">
+		<link rel="stylesheet" href="./css/index.css">
+		<!-- CSS overrides - remove if you don't need it -->
+		<link rel="stylesheet" href="css/app.css">
+	</head>
+	<body>
+		<!-- 区块，页面主体部分，跟div一样的用法 -->
+		<section class="todoapp">
+		</section>
+		<!-- 底部，跟div一样的用法 -->
+		<footer class="info">
+			<p>Double-click to edit a todo</p>
+			<!-- Remove the below line ↓ -->
+			<p>Template by <a href="javascript:;">Sindre Sorhus</a></p>
+			<!-- Change this out with your name and url ↓ -->
+			<p>Created by <a href="javascript:;">you</a></p>
+			<p>Part of <a href="javascript:;">TodoMVC</a></p>
+		</footer>
+		<script src="./template-web.js"></script>
+
+		<!-- 模板 -->
+		<script type="text/template" id="tmp">
+			<header class="header">
+				<h1>todos</h1>
+				<!-- 添加一条todo的文本框 -->
+				<input class="new-todo" placeholder="What needs to be done?" autofocus>
+			</header>
+			{{if length}}
+			<!-- 没有todo的时候这个标签需要隐藏 -->
+			<section class="main">
+				<!-- label的for属性和input的id属性一样时，点label就相当于点input -->
+				<!-- 全选按钮 -->
+
+				<input id="toggle-all" class="toggle-all" type="checkbox" {{activeNum === 0 && 'checked'}}>
+				<!-- 关联全选按钮 -->
+				<label for="toggle-all">Mark all as complete</label>
+
+				<!-- todo列表，每一个li就是一个todo，li的类名可以控制样式
+					没类名：未完成
+					completed：已完成
+					editing：进入编辑状态
+				-->
+				<ul class="todo-list">
+					{{each bindList v}}
+					<li class="{{v.isFinish && 'completed'}} {{v.isEdit && 'editing'}}">
+						<div class="view">
+							<!-- 前面的复选框 -->
+							<input class="toggle" type="checkbox" data-id={{v.id}} {{v.isFinish && "checked"}} >
+							<!-- 每一个todo的内容 -->
+							<label class="todo-item" data-id={{v.id}}>{{v.content}}</label>
+							<!-- 每一个todo的删除按钮，移入显示，移出隐藏 -->
+							<button class="destroy" data-id={{v.id}}></button>
+						</div>
+						<!-- 每一个todo进入编辑状态时候显示的文本框 -->
+						<input class="edit" data-id={{v.id}} value={{v.content}}>
+					</li>
+					{{/each}}
+				</ul>
+			</section>
+			<!-- 没有todo的时候这个标签需要隐藏 -->
+			<footer class="footer">
+				<!-- 有多少条未完成的todo -->
+				<span class="todo-count"><strong>{{activeNum}}</strong> item left</span>
+				<!-- 切换显示状态 -->
+				<ul class="filters">
+					<li>
+						<a class="{{type === 'all' && 'selectedselected'}}" href="#/">All</a>
+					</li>
+					<li>
+						<a class="{{type === 'active' && 'selected'}}" href="#/active">Active</a>
+					</li>
+					<li>
+						<a class="{{type === 'completed' && 'selected'}}" href="#/completed">Completed</a>
+					</li>
+				</ul>
+				<!-- 删除所有已完成，默认隐藏，只要有任何已完成的todo就显示 -->
+				{{if activeNum !== length}}
+				<button class="clear-completed">Clear completed</button>
+				{{/if}}
+			</footer>
+			{{/if}}
+		</script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
